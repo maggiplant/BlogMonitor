@@ -1,4 +1,7 @@
 # BlogMonitor
+
+![License](https://img.shields.io/github/license/Maggiplant/BlogMonitor)
+
 Program that monitors web pages, for example blogs, for changes
 
 ## Usage
