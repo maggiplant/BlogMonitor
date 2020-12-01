@@ -17,7 +17,7 @@ namespace BlogChecker
             {
                 new Argument<string>("url", "URL to be monitored"),
                 new Option(new[] {"--mail", "-m"}, "Turns on mailer function. The program will prompt you for your credentials."),
-                new Option<int>(new[] {"--delay", "-d"}, getDefaultValue: () => 900, "Set a custom interval between checks in seconds, default value is 900"),
+                new Option<int>(new[] {"--delay", "-d"}, getDefaultValue: () => 900, "Set a custom interval between checks in seconds"),
                 new Option("--debug", "Prints debug information to the console")
             };
 
