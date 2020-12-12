@@ -37,6 +37,7 @@ namespace BlogChecker
 #pragma warning disable IDE0059 // Visual studio will nag about download being unnecessarily assigned to without this.
             string download = null;
 #pragma warning restore IDE0059 // download will only NOT be assigned to in case of a network error when trying to reach the URL of the page to be checked, in which case the program will exit anyway.
+            int tries = 0;
             string output;
             string newstring;
             string oldstring = "";
@@ -57,15 +58,29 @@ namespace BlogChecker
             WebClient webClient = new WebClient();
             while (true)
             {
-                try
+                while (true)
                 {
-                    // Get webpage and save to string
-                    download = webClient.DownloadString(urlplusscheme);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("The program was unable to reach the entered URL. The error message was: " + e.Message);
-                    return;
+                    try
+                    {
+                        // Get webpage and save to string
+                        download = webClient.DownloadString(urlplusscheme);
+                        //Break the "infinite" while loop if the download succeeds
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        if (tries < 3)
+                        {
+                            Console.WriteLine("Unable to reach URL. Retrying in 5 minutes.");
+                            tries++;
+                            Thread.Sleep(300000);
+                        }
+                        else
+                        {
+                            Console.WriteLine("The program was unable to reach the entered URL. The error message was: " + e.Message);
+                            return;
+                        }
+                    }
                 }
 
                 // Load the page into an HTML Agility Pack HtmlDocument

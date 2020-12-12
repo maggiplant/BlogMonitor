@@ -1,8 +1,7 @@
 {
   "profiles": {
     "BlogMonitor": {
-      "commandName": "Project",
-      "commandLineArgs": "-d 5 metaenjoop.wordpress.com"
+      "commandName": "Project"
     }
   }
 }
