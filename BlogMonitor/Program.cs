@@ -1,11 +1,11 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
+using System.CommandLine;
+using System.CommandLine.Invocation;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
-using System.CommandLine;
-using System.CommandLine.Invocation;
-using HtmlAgilityPack;
 
 namespace BlogChecker
 {
@@ -34,6 +34,9 @@ namespace BlogChecker
             string emaillogin = null;
             string emailpassword = null;
             string recipientaddress = null;
+#pragma warning disable IDE0059 // Visual studio will nag about download being unnecessarily assigned to without this.
+            string download = null;
+#pragma warning restore IDE0059 // download will only NOT be assigned to in case of a network error when trying to reach the URL of the page to be checked, in which case the program will exit anyway.
             string output;
             string newstring;
             string oldstring = "";
@@ -54,8 +57,16 @@ namespace BlogChecker
             WebClient webClient = new WebClient();
             while (true)
             {
-                // Get webpage and save to string
-                string download = webClient.DownloadString(urlplusscheme);
+                try
+                {
+                    // Get webpage and save to string
+                    download = webClient.DownloadString(urlplusscheme);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The program was unable to reach the entered URL. The error message was: " + e.Message);
+                    return;
+                }
 
                 // Load the page into an HTML Agility Pack HtmlDocument
                 HtmlDocument html = new HtmlDocument();
