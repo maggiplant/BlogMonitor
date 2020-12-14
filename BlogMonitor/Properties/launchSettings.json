@@ -1,7 +1,8 @@
 {
-    "profiles": {
-        "BlogMonitor": {
-            "commandName": "Project"
-        }
+  "profiles": {
+    "BlogMonitor": {
+      "commandName": "Project",
+      "commandLineArgs": "--mail example.com"
     }
+  }
 }

@@ -45,14 +45,19 @@ namespace BlogChecker
 
             if (mail)
             {
-                Console.WriteLine("Enter your email address: ");
+                Console.Write("Enter your email address: ");
                 emaillogin = Console.ReadLine();
+                Console.WriteLine();
 
-                Console.WriteLine("Enter your password: ");
+                Console.Write("Enter your password: ");
                 emailpassword = Console.ReadLine();
+                Console.WriteLine();
 
-                Console.WriteLine("Enter email to be notified: ");
+                Console.Write("Enter email to be notified: ");
                 recipientaddress = Console.ReadLine();
+
+                Console.Clear();
+                Console.WriteLine("Credentials entered.\nProgram Starting Now...\n");
             }
 
             WebClient webClient = new WebClient();
