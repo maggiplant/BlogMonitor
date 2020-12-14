@@ -8,11 +8,13 @@ Program that monitors web pages, for example blogs, for changes
  BlogMonitor [options] <url>
 
 Arguments:
-  <url>    URL to be monitored
+  <url>    URL to be monitored. The URL must be entered without specifying the scheme e.g. "example.com", NOT "https://example.com"
+           or "http://example.com"
 
 Options:
   -m, --mail             Turns on mailer function. The program will prompt you for your credentials.
   -d, --delay <delay>    Set a custom interval between checks in seconds [default: 900]
+  --no-https             Use http instead of https when connecting to the specified URL
   --debug                Prints debug information to the console
   --version              Show version information
   -?, -h, --help         Show help and usage information
