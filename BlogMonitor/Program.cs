@@ -15,20 +15,21 @@ namespace BlogChecker
         {
             var rootCommand = new RootCommand
             {
-                new Argument<string>("url", "URL to be monitored"),
+                new Argument<string>("url", "URL to be monitored. The URL must be entered without specifying the scheme e.g. \"example.com\", NOT \"https://example.com\" or \"http://example.com\""),
                 new Option(new[] {"--mail", "-m"}, "Turns on mailer function. The program will prompt you for your credentials."),
                 new Option<int>(new[] {"--delay", "-d"}, getDefaultValue: () => 900, "Set a custom interval between checks in seconds"),
+                new Option("--no-https", "Use http instead of https when connecting to the specified URL"),
                 new Option("--debug", "Prints debug information to the console")
             };
 
             rootCommand.Description = "Program that monitors web pages for changes";
 
-            rootCommand.Handler = CommandHandler.Create<string, bool, int, bool>(HandleCommand);
+            rootCommand.Handler = CommandHandler.Create<string, bool, int, bool, bool>(HandleCommand);
 
             return rootCommand.Invoke(args);
         }
 
-        private static void HandleCommand(string url, bool mail, int delay, bool debug)
+        private static void HandleCommand(string url, bool mail, int delay, bool http, bool debug)
         {
             // Declare global variables
             string emaillogin = null;
@@ -41,7 +42,18 @@ namespace BlogChecker
             string output;
             string newstring;
             string oldstring = "";
-            string urlplusscheme = "https://" + url; // Prepend scheme to url
+            string urlplusscheme;
+
+            // Prepend scheme to url
+            // When http is true, use http://, else use https://
+            if (http)
+            {
+                urlplusscheme = "http://" + url;
+            }
+            else
+            {
+                urlplusscheme = "https://" + url;
+            }
 
             if (mail)
             {
