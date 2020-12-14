@@ -58,13 +58,14 @@ namespace BlogChecker
             WebClient webClient = new WebClient();
             while (true)
             {
+                // Loop for retrying the download in case of an error
                 while (true)
                 {
                     try
                     {
                         // Get webpage and save to string
                         download = webClient.DownloadString(urlplusscheme);
-                        //Break the "infinite" while loop if the download succeeds
+                        // Break the "infinite" while loop if the download succeeds
                         break;
                     }
                     catch (Exception e)

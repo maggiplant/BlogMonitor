@@ -1,7 +1,7 @@
 {
-  "profiles": {
-    "BlogMonitor": {
-      "commandName": "Project"
+    "profiles": {
+        "BlogMonitor": {
+            "commandName": "Project"
+        }
     }
-  }
 }
