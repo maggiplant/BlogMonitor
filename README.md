@@ -20,4 +20,4 @@ Options:
  Note that this program requires the .NET Framework to be installed in order for it to run. Specifically, this program targets .NET Core 3.1
 
 ## How it works
-This program downloads the complete HTML of the web page that was given as an argument. It then uses HTML Agility Pack to select the <p> tags from the HtmlDocument and saves their contents to a string. This string is compared with the string previously downloaded, if the old and the new string differ, the program reports this and sends an email if the --mail flag is used.
+This program downloads the complete HTML of the web page that was given as an argument. It then uses HTML Agility Pack to select the \<p\> tags from the HtmlDocument and saves their contents to a string. This string is compared with the string previously downloaded, if the old and the new string differ, the program reports this and sends an email if the --mail flag is used.
