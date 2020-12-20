@@ -39,6 +39,8 @@ namespace BlogChecker
             string download = null;
 #pragma warning restore IDE0059 // download will only NOT be assigned to in case of a network error when trying to reach the URL of the page to be checked, in which case the program will exit anyway.
             int tries = 0;
+            //TODO: check if assigning 0 to provider causes problems
+            int provider = 0;
             string output;
             string newstring;
             string oldstring = "";
@@ -57,6 +59,13 @@ namespace BlogChecker
 
             if (mail)
             {
+                //TODO: Add check so values that are NOT 1, 2 or 3 can not be entered
+                Console.WriteLine("This program supports the following email providers: ");
+                Console.WriteLine("1.\tGmail\n2.\tMail.com3.\t\nYahoo");
+                Console.Write("Please select one by tying the corresponding number: ");
+                provider = Console.Read();
+                Console.WriteLine();
+
                 Console.Write("Enter your email address: ");
                 emaillogin = Console.ReadLine();
                 Console.WriteLine();
@@ -128,7 +137,7 @@ namespace BlogChecker
                     // Call Mailer method with emaillogin and emailpassword
                     if (mail)
                     {
-                        Mailer(emaillogin, emailpassword, recipientaddress, url);
+                        Mailer(emaillogin, emailpassword, recipientaddress, url, provider);
                     }
                     // Print the contents of newstring when --debug flag is on
                     if (debug)
@@ -148,7 +157,7 @@ namespace BlogChecker
             Thread.Sleep(delay * 1000); // Multiply delay by 1000 because it was entered in seconds
         }
 
-        private static void Mailer(string email, string pass, string recipient, string url)
+        private static void Mailer(string email, string pass, string recipient, string url, int provider)
         {
             // Set up credentials beforehand
             NetworkCredential credentials = new NetworkCredential(email, pass);
@@ -163,14 +172,40 @@ namespace BlogChecker
             };
             message.To.Add(recipient);
 
-            // Set up smtp client
-            SmtpClient client = new SmtpClient
+            // Declare SmtpClient outside of switch/case, set the settings inside of it
+            SmtpClient client = new SmtpClient();
+            switch (provider)
             {
-                Host = "smtp.mail.com",
-                Port = 587,
-                EnableSsl = true,
-                UseDefaultCredentials = false,
-                Credentials = credentials
+                case 1:
+                    {
+                        client.Host = "smtp.gmail.com";
+                        client.Port = 587;
+                        client.EnableSsl = true;
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = credentials;
+
+                        break;
+                    }
+                case 2:
+                    {
+                        client.Host = "smtp.mail.com";
+                        client.Port = 587;
+                        client.EnableSsl = true;
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = credentials;
+
+                        break;
+                    }
+                case 3:
+                    {
+                        client.Host = "smtp.mail.yahoo.com";
+                        client.Port = 587;
+                        client.EnableSsl = true;
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = credentials;
+
+                        break;
+                    }
             };
 
             // Put the code to send the email inside try-catch since email providers like to give errors instead of sending mail
